@@ -1,20 +1,39 @@
-This toolbox assumes that camera is mounted on Robot end effector.The main idea of Robot-camera-calibration is to determine the transformation matrix between robot tool coordinate frame and camera coordinate frame. This helps to have all the geometric information of work piece
-in world coordinate in camera coordinate and then in robot base frame. The computation of 3d
-information is necessary step to avoid localization as all coordinate information of work piece in
+This toolbox assumes that camera is mounted on Robot end effector.The main idea of 
+Robot-camera-calibration is to determine the transformation matrix between robot tool
+ coordinate frame and camera coordinate frame. This helps to have all the geometric information
+ of work piecein world coordinate in camera coordinate and then in robot base frame. The computation
+ of 3d information is necessary step to avoid localization as all coordinate information of work piece in
 object coordinate is known with respect to robot frame. So based on this information the robot
-can be commanded without any localization steps.In this configuration Laser range finder is used to give the information where the work piece is with respect to robot base frame. The transformation matrix between object/work piece coordinate
-frame and robot tool coordinate frame is established (RTW) based on point cloud measurement (at least three points) in robot coordinate frame and corresponding point in object coordinate frame.
+can be commanded without any localization steps.In this configuration Laser range finder is used
+ to give the information where the work piece is with respect to robot base frame. The transformation 
+matrix between object/work piece coordinateframe and robot tool coordinate frame is established 
+(RTW) based on point cloud measurement (at least three points) in robot coordinate frame and 
+corresponding point in object coordinate frame.
 
-In addition the transformation matrix between object coordinate frame and camera coordinate(CTW) frame is computed using OpenCV pose estimation algorithm. Tool coordinate frame with respect to robot base coordinate system (RTT) can be read from robot controller. Based on the
-above information camera coordinate system point cloud can be read in robot tool coordinate (TTC).
+In addition the transformation matrix between object coordinate frame and camera 
+coordinate(CTW) frame is computed using OpenCV pose estimation algorithm. Tool 
+coordinate frame with respect to robot base coordinate system (RTT) can be read 
+from robot controller. Based on the above information camera coordinate system point
+ cloud can be read in robot tool coordinate (TTC).
 
-Finally all the information in different frame can be expressed in robot base coordinate frame. The reconstructed 3D information and the generated 3D CAD model is given in camera coordinate frame, and then transformed to robot base frame to avoid localization. The transformation matrixbetween object coordinate frame and robot coordinate frame is estimated using singular value decomposition. To compute the rotation between the cloud first and the centroid of each data set,and subtract the centroid from each data point.This centers the data set at a new origin with neworigin is the centroid. Once the data sets are both centered at their centroids, we need to find the rotation about these common origins.After this the covariance matrix(C) of normalized data sets is computed. Singular value decomposition (SVD) is applied to covariance matrix to determine rotation matrix(R).
+Finally all the information in different frame can be expressed in robot base 
+coordinate frame. The reconstructed 3D information and the generated 3D CAD model 
+is given in camera coordinate frame, and then transformed to robot base frame to 
+avoid localization. The transformation matrixbetween object coordinate frame and 
+robot coordinate frame is estimated using singular value decomposition. To compute
+ the rotation between the cloud first and the centroid of each data set,and subtract 
+the centroid from each data point.This centers the data set at a new origin with 
+new origin is the centroid. Once the data sets are both centered at their centroids, 
+we need to find the rotation about these common origins.After this the 
+covariance matrix(C) of normalized data sets is computed. Singular value
+ decomposition (SVD) is applied to covariance matrix to determine rotation matrix(R).
 
-Another transformation is the transformation between camera coordinate and object coordinate.In
-computer vision the pose (rotation and translation)of camera in world coordinate is determined by
-perspective n point (PnP) algorithm. This algorithm determines the orientation and location of cam-
-era in 3d world based on 3D object points in object coordinate system and the corresponding image
-points in image coordinates. The algorithm finds the pose that minimizes the re-projection error in
-iterative method based on Levenberg-Marquardt optimization given camera matrix and distortion
-coefficients. 
+Another transformation is the transformation between camera coordinate and
+ object coordinate.In computer vision the pose (rotation and translation)of 
+camera in world coordinate is determined by perspective n point (PnP) algorithm. 
+This algorithm determines the orientation and location of camera in 3d world 
+based on 3D object points in object coordinate system and the corresponding image
+points in image coordinates. The algorithm finds the pose that minimizes the 
+re-projection error in iterative method based on Levenberg-Marquardt optimization
+ given camera matrix and distortion coefficients. 
 
